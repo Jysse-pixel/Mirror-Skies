@@ -1,0 +1,34 @@
+Liste des platfomres
+
+- La classiques
+	Doit être esquivée
+- Celles qui doivent être détruite
+	Permettent d'accéder aux niveaux bonus
+- Platforme où on peut passer par dessous mais pas par dessus
+
+- Obstacle qui tourne
+- Obstacles qui tombent aléatoirement
+
+Bonus :
+- Zone evc plein de piece
+_ Inverser la symétrie
+- Un des 2 va + vite - moins vite
+- Canon qui peut être détruit
+- ennemis qui volent devant toi
+- 
+
+Featur 
+barre de vie
+nb de balles limité
+la possibilité de récupérer des balles
+Boss de fin ( différent à chaque fois)
+Niveau dans l'eau
+
+Priorité :
+Implémenter tire
+barre de vie
+implémenter 1 ennemi de base qui tire
+Pieces aléatioire hors des zones bonus
+
+Faire une image et récup pixels des platformes
+
