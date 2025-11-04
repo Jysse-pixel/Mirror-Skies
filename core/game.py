@@ -38,6 +38,12 @@ class Game:
                 self.bullets.append(Bullet(a.right, a.centery - 4))
                 b = self.playerA.mirror_rect(SCREEN_HEIGHT)
                 self.bullets.append(Bullet(b.right, b.centery - 4))
+
+
+            if e.type == p.KEYDOWN:
+                if e.key == p.K_ESCAPE:
+                    return False
+                        
         return True
 
     def update(self):
