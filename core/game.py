@@ -8,6 +8,8 @@ from entities.bullet import Bullet
 from ui.hud import HealthBar
 from core.input import fired
 
+from entities.platforms.plateforms import Destructible
+
 class Game:
     def __init__(self):
         self.clock = p.time.Clock()
@@ -21,11 +23,15 @@ class Game:
         self.bullets = []
         self.game_active = True
 
+        self.score = 0
+        self.font = p.font.SysFont(None, 32)
+
     def reset(self):
         self.game_active = True
         self.playerA.rect.x = 200
         self.playerA.rect.y = MID_SCREEN_HEIGHT//2 - PLAYER_SIZE//2
         self.health.hp = self.health.max_hp
+        self.score = 0
         if self.level.platforms:
             self.level.platforms[0].center = (SCREEN_WIDTH//2, MID_SCREEN_HEIGHT - 100)
 
@@ -39,11 +45,9 @@ class Game:
                 b = self.playerA.mirror_rect(SCREEN_HEIGHT)
                 self.bullets.append(Bullet(b.right, b.centery - 4))
 
-
             if e.type == p.KEYDOWN:
                 if e.key == p.K_ESCAPE:
                     return False
-                        
         return True
 
     def update(self):
@@ -51,6 +55,7 @@ class Game:
         if self.game_active:
             self.playerA.handle_input()
             self.level.update()
+
             for b in list(self.bullets):
                 b.update()
                 if b.offscreen():
@@ -58,9 +63,28 @@ class Game:
                 else:
                     for plat in list(self.level.platforms):
                         if b.rect.colliderect(plat):
-                            self.level.platforms.remove(plat)
-                            self.bullets.remove(b)
-                            break
+                            if plat.destructible:
+                                self.level.platforms.remove(plat)
+                                self.bullets.remove(b)
+                                break
+
+
+            for coin in list(self.level.coins):
+                if self.playerA.rect.colliderect(coin.rect):
+                    self.level.coins.remove(coin)
+                    self.score += 1
+        
+          
+            for bonus in list(self.level.bonuses):
+                if self.playerA.rect.colliderect(bonus.rect):
+                    self.playerA.speed += self.playerA.speed + self.playerA.speed_bonus_timer
+                    
+                if self.playerA.rect.colliderect(InverMalus):
+                    self.playerA.vy = -5
+                if self.playerA.rect.colliderect(Inverse")    
+
+            
+
             self.game_active = check_player_and_bounds(self.playerA.rect, self.level.platforms, self.health)
         else:
             k = p.key.get_pressed()
@@ -69,7 +93,6 @@ class Game:
 
     def draw(self):
         self.bg.draw(self.screen)
-        # traits / debug milieu
         p.draw.line(self.screen, GREEN, (0, MID_SCREEN_HEIGHT), (SCREEN_WIDTH, MID_SCREEN_HEIGHT), 3)
 
         if self.game_active:
@@ -81,10 +104,14 @@ class Game:
                 b.draw(self.screen)
             self.health.draw(self.screen)
 
+            text = self.font.render(f"Score: {self.score}", True, (255, 255, 255))
+            self.screen.blit(text, (10, 70))
+
         p.display.flip()
 
     def run(self):
-        while True:
+        running = True
+        while running:
             if not self.handle_events():
                 break
             self.clock.tick(FPS)

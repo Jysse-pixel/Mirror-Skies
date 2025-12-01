@@ -32,3 +32,6 @@ Pieces aléatioire hors des zones bonus
 
 Faire une image et récup pixels des platformes
 
+intégerer 3 niveaux, un sur terre, l'autre dans l'eau et un
+dans l'espace
+
