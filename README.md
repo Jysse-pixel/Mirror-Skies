@@ -30,6 +30,7 @@ Pour lancer le jeu, executez le fichier main.py avec Python.
 Etudiants :
 - BOUDJAJ Hania
 - ANTOINE Alexis
+- 
 Tuteurs :
 - HYVERNAT Pierre
 - GLEDEL Valentin
