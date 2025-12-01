@@ -14,6 +14,9 @@ A vous de faire en sorte que vos deux vaisseaux s'en sorte indemne ! La moindre 
 ## Tutoriel
 Insérer image
 
+## Informations complémentaires
+Etudiants en Informatique à l'Université Savoie Mont Blanc, nous avons réaliser ce jeu dans le cadre de notre projet VISI301, le but étant de réaliser un petit jeu en utilisant la librairie pygame.
+
 ## Instalation
 
 ### Pré-requis :
@@ -22,6 +25,14 @@ Insérer image
 - Et c'est tout !
 
 Pour lancer le jeu, executez le fichier main.py avec Python.
+
+## Crédits
+Etudiants :
+- BOUDJAJ Hania
+- ANTOINE Alexis
+Tuteurs :
+- HYVERNAT Pierre
+- GLEDEL Valentin
 
 ## To do readme :
 -Tutoriel
