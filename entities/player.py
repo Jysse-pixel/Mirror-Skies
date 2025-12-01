@@ -1,53 +1,65 @@
 import pygame as p
-from settings import PLAYER_SIZE, SPEED, MID_SCREEN_HEIGHT
+from settings import PLAYER_SIZE, MID_SCREEN_HEIGHT, GRAVITY, JUMP_FORCE, SPEED
 
-
-class Player(p.sprite.Sprite):
-    def __init__(self, x, y, color=(255,0,0)):
-        super().__init__()
+class Player:
+    def __init__(self, x, y, color=(255, 0, 0)):
         self.rect = p.Rect(x, y, PLAYER_SIZE, PLAYER_SIZE)
         self.color = color
-        self.y = float(y)
+        self.y_float = float(y)
         self.vy = 0.0
-
-      
-        self.speed = 5
-        self.base_speed = self.speed
-        self.speed_bonus_timer = 20
+        
+        self.base_speed = SPEED
+        self.speed = SPEED
+        self.bonus_timer = 0
 
     def handle_input(self):
-        k = p.key.get_pressed()
-        if k[p.K_RIGHT]:
+        keys = p.key.get_pressed()
+        
+        if keys[p.K_RIGHT]:
             self.rect.x += self.speed
-        if k[p.K_LEFT]:
+        if keys[p.K_LEFT]:
             self.rect.x -= self.speed
-        if k[p.K_UP]:
-            self.y -= 3
-            self.vy = 0.0
-        self.vy += 0.025
-        self.y += self.vy
-        self.rect.y = int(self.y)
+            
+        # Gravité
+        if keys[p.K_UP]:
+            self.vy += JUMP_FORCE * 0.2 
+            if self.vy < JUMP_FORCE: 
+                self.vy = JUMP_FORCE
+        
+        self.vy += GRAVITY
+        self.y_float += self.vy
+        
+        # Limites
+        self.rect.y = int(self.y_float)
+        
+        # Plafond
         if self.rect.top < 0:
             self.rect.top = 0
-            self.y = float(self.rect.y)
-            self.vy = 0.0
+            self.y_float = 0
+            self.vy = 0
+            
+        # Milieu de l'écran
         if self.rect.bottom > MID_SCREEN_HEIGHT:
             self.rect.bottom = MID_SCREEN_HEIGHT
-            self.y = float(self.rect.y)
-            self.vy = 0.0
+            self.y_float = self.rect.y
+            self.vy = 0
 
-    def mirror_rect(self, screen_h):
-        return p.Rect(self.rect.x, (screen_h - self.rect.height) - self.rect.y, self.rect.width, self.rect.height)
+    def get_mirror_rect(self, screen_height):
+        return p.Rect(self.rect.x, (screen_height - self.rect.height) - self.rect.y, self.rect.width, self.rect.height)
+
+    def update(self):
+        self.handle_input()
+        
+        if self.bonus_timer > 0:
+            self.bonus_timer -= 1
+            if self.bonus_timer <= 0:
+                self.speed = self.base_speed
+                self.color = (255, 0, 0)
+
+    def activate_speed_bonus(self, duration=300):
+        self.speed = self.base_speed * 2
+        self.bonus_timer = duration
+        self.color = (0, 100, 255) 
 
     def draw(self, screen):
         p.draw.rect(screen, self.color, self.rect)
-
-    def update(self, *args, **kwargs):
-        self.handle_input()
-
-
-        if self.speed_bonus_timer > 0:
-            self.speed_bonus_timer -= 1
-            if self.speed_bonus_timer <= 0:
-
-                self.speed = self.base_speed

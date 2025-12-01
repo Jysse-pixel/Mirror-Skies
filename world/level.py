@@ -1,64 +1,63 @@
 import pygame as p
-from settings import SCREEN_WIDTH, MID_SCREEN_HEIGHT
-from entities.platforms.plateforms import Destructible, Moving, Solid
+import random
+from settings import SCREEN_WIDTH, MID_SCREEN_HEIGHT, SCROLL_BG_SPEED
+from entities.platforms.plateforms import Solid, Destructible
 from entities.coin import Coin
 from entities.bonus import SpeedBonus
-
-
-SCROLL_PLATFORMS_SPEED = -5 
+from entities.enemies import TestEnemy
 
 class Level:
     def __init__(self):
-        self.platforms = self._make_platforms()
-        self.coins = self._make_coins()
-        self.bonuses = self._make_bonuses()  
+        self.platforms = []
+        self.coins = []
+        self.bonuses = []
+        self.enemies = []
+        
+        self._generate_level()
 
-    def _make_platforms(self):
-        base_x = SCREEN_WIDTH + 300
-        plats = [
-         
-        ]
-        return plats
+    def _generate_level(self):
 
-    def _make_coins(self):
-        base_x = SCREEN_WIDTH + 350
-        coins = [
-         
-        ]
-        return coins
+        self.platforms.append(Solid(SCREEN_WIDTH + 200, MID_SCREEN_HEIGHT - 100, 200, 30))
+        self.platforms.append(Solid(SCREEN_WIDTH + 600, MID_SCREEN_HEIGHT - 150, 200, 30))
+        
 
-    def _make_bonuses(self):
-        base_x = SCREEN_WIDTH + 450
-        bonuses = [
-            SpeedBonus(base_x, 200),
+        self.enemies.append(TestEnemy(SCREEN_WIDTH + 1100, MID_SCREEN_HEIGHT - 100, 60, 60, 5, 0, (200, 150, 60), "turret"))
+
+        coin_positions = [
+            (SCREEN_WIDTH + 250, MID_SCREEN_HEIGHT - 150),
+            (SCREEN_WIDTH + 300, MID_SCREEN_HEIGHT - 170),
+            (SCREEN_WIDTH + 650, MID_SCREEN_HEIGHT - 200),
+            (SCREEN_WIDTH + 1000, 100)
         ]
-        return bonuses
+        for pos in coin_positions:
+            self.coins.append(Coin(pos[0], pos[1]))
+
+        self.bonuses.append(SpeedBonus(SCREEN_WIDTH + 1200, 200))
 
     def update(self):
+        
         for plat in list(self.platforms):
-            plat.update()
-            plat.x += SCROLL_PLATFORMS_SPEED
-            if plat.right < 0:
-                self.platforms.remove(plat)
+            plat.update(SCROLL_BG_SPEED)
+            if plat.right < 0: self.platforms.remove(plat)
 
         for coin in list(self.coins):
-            coin.update()
-            coin.rect.x += SCROLL_PLATFORMS_SPEED
-            if coin.rect.right < 0:
-                self.coins.remove(coin)
+            coin.update(SCROLL_BG_SPEED)
+            if coin.rect.right < 0: self.coins.remove(coin)
 
         for bonus in list(self.bonuses):
-            bonus.rect.x += SCROLL_PLATFORMS_SPEED
-            if bonus.rect.right < 0:
-                self.bonuses.remove(bonus)
+            bonus.update(SCROLL_BG_SPEED)
+            if bonus.rect.right < 0: self.bonuses.remove(bonus)
 
-    def draw(self, screen, color=(0,255,0)):
+        for enemy in list(self.enemies):
+            enemy.update(SCROLL_BG_SPEED)
+            if enemy.rect.right < 0: self.enemies.remove(enemy)
+
+    def draw(self, screen):
         for plat in self.platforms:
-            c = getattr(plat, "color", color)
-            p.draw.rect(screen, c, plat)
-
+            plat.draw(screen)
         for coin in self.coins:
             coin.draw(screen)
-
         for bonus in self.bonuses:
             bonus.draw(screen)
+        for enemy in self.enemies:
+            enemy.draw(screen)
