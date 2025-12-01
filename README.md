@@ -37,6 +37,3 @@ Tuteurs :
 
 ## To do readme :
 - Tutoriel
-- Config
-- pres projet
-- dlw
