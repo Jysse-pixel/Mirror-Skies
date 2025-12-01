@@ -23,3 +23,24 @@ def check_player_and_enemy(player_rect: p.Rect, enemy, health_bar) -> bool:
         return False
 
     return True
+
+
+def check_coin_collection(coins: list, player_rect: p.Rect) -> int:
+    """
+    Vérifie si le joueur collecte des pièces.
+    
+    Args:
+        coins: Liste des pièces dans le niveau
+        player_rect: Rectangle du joueur
+        
+    Returns:
+        Nombre de points collectés (nombre de pièces ramassées)
+    """
+    points_gained = 0
+    
+    for coin in coins:
+        if not coin.collected and coin.rect.colliderect(player_rect):
+            coin.collected = True
+            points_gained += 1
+    
+    return points_gained

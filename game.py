@@ -5,6 +5,7 @@ from world.level import Level
 from world.collisions import *
 from entities.player import Player
 from entities.bullet import *
+from entities.coin import Coin
 ###### MODIF ENEMY
 from entities.enemies import *
 from ui.hud import HealthBar
@@ -34,6 +35,22 @@ class Game:
         
         self.enemy_bullets = []   # nouvelles balles ennemies
 
+        # Système de scoring
+        self.score = 0
+        self.coins = []
+        self.init_coins()
+
+    def init_coins(self):
+        """Initialise les pièces dans le niveau. Note : a move"""
+        self.coins = [
+            Coin(400, 200),
+            Coin(600, 150),
+            Coin(800, 250),
+            Coin(1000, 180),
+            Coin(700, 400),
+            Coin(900, 350),
+    ]
+
     def reset(self):
         #self.game_active = True
         self.game_active = check_player_and_bounds(self.playerA.rect, self.level.platforms, self.health)
@@ -47,6 +64,10 @@ class Game:
         self.health.hp = self.health.max_hp
         if self.level.platforms:
             self.level.platforms[0].center = (SCREEN_WIDTH//2, MID_SCREEN_HEIGHT - 100)
+
+        # Reset du score et des pièces
+        self.score = 0
+        self.init_coins()
 
     def handle_events(self):
         for e in p.event.get():
@@ -66,6 +87,12 @@ class Game:
             self.playerB.handle_input_mirror()
             self.level.update()
             
+            for coin in self.coins:
+                coin.update()
+
+            self.score += check_coin_collection(self.coins, self.playerA.rect)
+            self.score += check_coin_collection(self.coins, self.playerB.rect)
+
             for enemy in self.enemies:
                 enemy.move()
                 enemy.update_color()
@@ -140,6 +167,9 @@ class Game:
             self.playerA.draw(self.screen)
             self.playerB.draw(self.screen)
             self.level.draw(self.screen)
+
+            Coin.draw_all(self.screen, self.coins)
+
             for b in self.bullets:
                 b.draw(self.screen)
             self.health.draw(self.screen)
@@ -147,10 +177,24 @@ class Game:
             #### MODIF - AFICHER L'ENEMY
             for enemy in self.enemies:
                 enemy.draw(self.screen)
+
             for eb in self.enemy_bullets:
                 eb.draw(self.screen)
 
+            self.draw_score()
+
         p.display.flip()
+
+    def draw_score(self):
+        """Affiche le score à l'écran. Note : je laissa ça là temporairement."""
+        font = p.font.Font(None, 48)
+        score_text = font.render(f"Score: {self.score}", True, (255, 215, 0))
+        score_shadow = font.render(f"Score: {self.score}", True, (0, 0, 0))
+        
+        # Ombre
+        self.screen.blit(score_shadow, (SCREEN_WIDTH - 252, 12))
+        # Texte
+        self.screen.blit(score_text, (SCREEN_WIDTH - 250, 10))
 
     def run(self):
         while True:
