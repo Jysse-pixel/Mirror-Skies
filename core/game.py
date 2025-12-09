@@ -67,34 +67,36 @@ class Game:
             
             self.level.update()
 
+            for plat in list(self.level.platforms):
+                if self.playerA.rect.colliderect(plat) or rect_b.colliderect(plat):
+                    self.health.hp -= 1
+
             for b in list(self.bullets):
                 b.update()
+                bullet_active = True 
+
                 if b.offscreen():
                     self.bullets.remove(b)
-                    continue
+                    bullet_active = False
                 
-                for plat in list(self.level.platforms):
-                    # Gestion des dégâts si le joueur touche une plateforme
-                    if self.playerA.rect.colliderect(plat) or rect_b.colliderect(plat):
-                        self.health.hp -= 1
-
-                    if b.rect.colliderect(plat):
-                        self.bullets.remove(b)
-                        if plat.destructible:
-                            if plat.take_damage():
-                                self.level.platforms.remove(plat)
-                                self.score += 5
-                        break
-                
-
-                if b in self.bullets:
-                    for enemy in list(self.level.enemies):
-                        if b.rect.colliderect(enemy.rect):
+                if bullet_active:
+                    for plat in list(self.level.platforms):
+                        if bullet_active and b.rect.colliderect(plat):
                             self.bullets.remove(b)
+                            bullet_active = False
+                            if plat.destructible:
+                                if plat.take_damage():
+                                    self.level.platforms.remove(plat)
+                                    self.score += 5
+                
+                if bullet_active:
+                    for enemy in list(self.level.enemies):
+                        if bullet_active and b.rect.colliderect(enemy.rect):
+                            self.bullets.remove(b)
+                            bullet_active = False
                             if enemy.hit():
                                 self.level.enemies.remove(enemy)
                                 self.score += 10
-                            break
 
             for enemy in self.level.enemies:
                 fire_data = enemy.try_fire(self.playerA.rect)
@@ -164,9 +166,12 @@ class Game:
         p.display.flip()
 
     def run(self):
-        while True:
-            if not self.handle_events():
-                break
-            self.clock.tick(FPS)
-            self.update()
-            self.draw()
+        # Variable de contrôle globale (running)
+        running = True
+        while running:
+            running = self.handle_events()
+        
+            if running:
+                self.clock.tick(FPS)
+                self.update()
+                self.draw()
