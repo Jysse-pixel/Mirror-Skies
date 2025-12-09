@@ -44,7 +44,7 @@ class TestEnemy:
         return self.hp <= 0
 
     def try_fire(self, target_rect, bullet_speed=7):
-        if self.mode != "turret":
+        if self.mode != "turret" and self.mode != "mobile":
             return None
 
         if self.fire_cooldown > 0:
