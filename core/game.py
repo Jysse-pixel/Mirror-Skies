@@ -7,6 +7,7 @@ from entities.player import Player
 from entities.bullet import Bullet, EnemyBullet
 from ui.hud import HealthBar
 from core.input import fired
+from ui.menu import start_menu, pause_menu
 
 class Game:
     def __init__(self):
@@ -50,10 +51,16 @@ class Game:
                 rect_b = self.playerA.get_mirror_rect(SCREEN_HEIGHT)
                 self.bullets.append(Bullet(rect_b.right, rect_b.centery))
 
-            if e.type == p.KEYDOWN and e.key == p.K_r and not self.game_active:
-                self.reset()
-            if e.type == p.KEYDOWN and e.key == p.K_ESCAPE:
-                return False
+            if e.type == p.KEYDOWN:
+                if e.key == p.K_r and not self.game_active:
+                    self.reset()
+                
+                # Menu Pause
+                if e.key == p.K_ESCAPE or e.key == p.K_p:
+                    action = pause_menu(self.screen)
+                    if action == "quit":
+                        return False
+
         return True
 
     def update(self):
