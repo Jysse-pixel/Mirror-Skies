@@ -7,8 +7,4 @@ def check_collisions_and_bounds(rect, platforms, screen_w, screen_h):
     if rect.top < 0 or rect.bottom > screen_h:
         return False
 
-    for plat in platforms:
-        if rect.colliderect(plat):
-            return False 
-            
     return True 

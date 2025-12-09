@@ -74,6 +74,10 @@ class Game:
                     continue
                 
                 for plat in list(self.level.platforms):
+                    # Gestion des dégâts si le joueur touche une plateforme
+                    if self.playerA.rect.colliderect(plat) or rect_b.colliderect(plat):
+                        self.health.hp -= 1
+
                     if b.rect.colliderect(plat):
                         self.bullets.remove(b)
                         if plat.destructible:
