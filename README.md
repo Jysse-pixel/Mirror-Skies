@@ -1,7 +1,4 @@
 # Mirror-Skies
-<<<<<<< Updated upstream
-Mirror Skies est un jeu où deux avions évoluent en parallèle, leurs mouvements étant synchronisés de chaque côté de l’écran. Le but est d’éviter les obstacles, de les détruire et de collecter des bonus pour atteindre la fin de la course.
-=======
 Deux avions, un pilote !
 Dans Mirror Skies, vous contrôlez deux avions en parallèle, leurs mouvements étant synchronisés de chaque côté de l’écran. Cependant, le ciel est plein de dangers, et peu importe les obstacles, vos deux avions doivent finir la course.
 
@@ -40,7 +37,3 @@ Etudiants :
 Tuteurs :
 - HYVERNAT Pierre
 - GLEDEL Valentin
-
-## TO DO :
-MAJ Images
->>>>>>> Stashed changes
