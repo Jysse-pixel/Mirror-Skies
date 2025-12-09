@@ -99,7 +99,13 @@ class Game:
                                 self.score += 10
 
             for enemy in self.level.enemies:
-                fire_data = enemy.try_fire(self.playerA.rect)
+                # Changemen pour viser le joueur d'en bas
+                if enemy.rect.centery < MID_SCREEN_HEIGHT:
+                    target = self.playerA.rect
+                else:
+                    target = rect_b
+
+                fire_data = enemy.try_fire(target)
                 if fire_data:
                     x, y, vx, vy = fire_data
                     self.enemy_bullets.append(EnemyBullet(x, y, vx, vy))

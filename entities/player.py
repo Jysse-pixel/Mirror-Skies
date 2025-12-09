@@ -1,5 +1,5 @@
 import pygame as p
-from settings import PLAYER_SIZE, MID_SCREEN_HEIGHT, GRAVITY, JUMP_FORCE, SPEED
+from settings import PLAYER_SIZE, MID_SCREEN_HEIGHT, GRAVITY, JUMP_FORCE, SPEED, MAX_FALL_SPEED
 
 class Player:
     def __init__(self, x, y, color=(255, 0, 0)):
@@ -20,13 +20,16 @@ class Player:
         if keys[p.K_LEFT]:
             self.rect.x -= self.speed
             
-        # Gravité
         if keys[p.K_UP]:
             self.vy += JUMP_FORCE * 0.2 
             if self.vy < JUMP_FORCE: 
                 self.vy = JUMP_FORCE
         
         self.vy += GRAVITY
+        
+        if self.vy > MAX_FALL_SPEED:
+            self.vy = MAX_FALL_SPEED
+            
         self.y_float += self.vy
         
         # Limites
