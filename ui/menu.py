@@ -13,12 +13,9 @@ def start_menu():
     running = True
     while running:
         for ev in p.event.get():
-            if ev.type == p.QUIT:
+            if ev.type == p.QUIT or (ev.type == p.KEYDOWN and ev.key == p.K_ESCAPE):
                 p.quit()
-                raise SystemExit
-            if ev.type == p.KEYDOWN and ev.key == p.K_ESCAPE:
-                p.quit()
-                raise SystemExit
+
             if ev.type == p.MOUSEBUTTONDOWN and ev.button == 1:
                 if btn_rect.collidepoint(ev.pos):
                     running = False
