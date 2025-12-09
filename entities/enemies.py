@@ -40,7 +40,7 @@ class TestEnemy:
     def hit(self):
         self.hp -= 1
         self.flash_timer = 3
-        self.color = (255, 0, 0) # Flash blanc
+        self.color = (255, 0, 0) # Flash blanc quand ennemie touché
         return self.hp <= 0
 
     def try_fire(self, target_rect, bullet_speed=7):
