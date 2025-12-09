@@ -11,6 +11,7 @@ class TestEnemy:
         self.color = color # couleur affichée
         self.base_color = color # couleur normale
         self.mode = mode #"mobile" ou "turret"
+        # A changer car problème / A.A
         
         self.velocity_y = vy
         # limites du mouvement vertical
