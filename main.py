@@ -4,6 +4,9 @@ from ui.menu import start_menu
 
 if __name__ == "__main__":
     p.init()
-    start_menu()
-    Game().run() 
-    p.quit()
+    action = start_menu()
+
+    if action == "play":
+        Game().run() 
+    elif action == "quit":
+        p.quit()
