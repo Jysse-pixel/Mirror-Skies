@@ -1,11 +1,10 @@
 import pygame as p
-from settings import PLAYER_SIZE, MID_SCREEN_HEIGHT, GRAVITY, JUMP_FORCE, SPEED, MAX_FALL_SPEED
+from settings import PLAYER_SIZE, MID_SCREEN_HEIGHT, JUMP_FORCE, SPEED
 
 class Player:
     def __init__(self, x, y, color=(255, 0, 0)):
         self.rect = p.Rect(x, y, PLAYER_SIZE, PLAYER_SIZE)
         self.color = color
-        self.y_float = float(y)
         self.vy = 0.0
         
         self.base_speed = SPEED
@@ -15,25 +14,20 @@ class Player:
     def handle_input(self):
         keys = p.key.get_pressed()
         
-        if keys[p.K_RIGHT]:
+        if keys[p.K_RIGHT] or keys[p.K_d]:
             self.rect.x += self.speed
-        if keys[p.K_LEFT]:
+
+        if keys[p.K_LEFT] or keys[p.K_q]:
             self.rect.x -= self.speed
             
-        if keys[p.K_UP]:
-            self.vy += JUMP_FORCE * 0.2 
-            if self.vy < JUMP_FORCE: 
-                self.vy = JUMP_FORCE
+        if keys[p.K_UP] or keys[p.K_z]:
+            self.rect.y -= self.speed
         
-        self.vy += GRAVITY
+        if keys[p.K_DOWN] or keys[p.K_s]:
+            self.rect.y += self.speed
         
-        if self.vy > MAX_FALL_SPEED:
-            self.vy = MAX_FALL_SPEED
-            
-        self.y_float += self.vy
         
         # Limites
-        self.rect.y = int(self.y_float)
         
         # Plafond
         if self.rect.top < 0:
