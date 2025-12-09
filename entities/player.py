@@ -21,10 +21,10 @@ class Player:
             self.rect.x -= self.speed
             
         if keys[p.K_UP] or keys[p.K_z]:
-            self.rect.y -= self.speed
+            self.rect.y -= 5
         
         if keys[p.K_DOWN] or keys[p.K_s]:
-            self.rect.y += self.speed
+            self.rect.y += 5
         
         
         # Limites

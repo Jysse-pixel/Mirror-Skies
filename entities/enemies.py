@@ -2,7 +2,7 @@ import pygame as p
 import math
 from settings import MID_SCREEN_HEIGHT
 
-class TestEnemy: 
+class Enemy: 
     def __init__(self, x, y, w, h, hp, vy, color, mode="mobile"):
         self.rect = p.Rect(x, y, w, h)
         self.x_float = float(x)
