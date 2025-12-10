@@ -93,7 +93,7 @@ def pause_menu(screen):
     clock = p.time.Clock()
 
     ## Ressources
-    background = p.image.load("assets/images/menuBg.jpg")
+    background = p.image.load("assets/images/pauseBg.jpg")
     background=p.transform.scale(background, (SCREEN_WIDTH, SCREEN_HEIGHT))
         
     # List des boutons
