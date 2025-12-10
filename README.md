@@ -8,6 +8,9 @@ Mais prenez garde à ne pas gaspiller vos munitions ! Qui sait, vous pourriez fi
 ### Rammassez des pièces et battez votre record !
 Certaines zones bonus peuvent vous rapporter plus de pièces, serez-vous prêt à prendre des risques ?
 
+<img width="1462" height="954" alt="image" src="https://github.com/user-attachments/assets/244b18d3-f081-4f7d-9ef5-d9e6cc5c7b8c" />
+
+
 ### Évitez les obstacles !
 A vous de faire en sorte que vos deux vaisseaux s'en sortent indemnes ! La moindre erreur peut vous coûter cher, prenez garde aux bords.
 Les plateformes translucides sont destructibles, les tourelles vous tirent dessus ! 
