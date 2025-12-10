@@ -13,3 +13,21 @@ class SpeedBonus:
 
     def draw(self, screen):
         p.draw.rect(screen, self.color, self.rect)
+
+class HealthBonus:
+    def __init__(self, x, y, size=30):
+        self.rect = p.Rect(x, y, size, size)
+        self.x_float = float(x)
+        self.color = (0, 255, 0)
+        self.type = "health"
+
+    def update(self, scroll_speed):
+        self.x_float += scroll_speed
+        self.rect.x = int(self.x_float)
+
+    def draw(self, screen):
+        p.draw.rect(screen, self.color, self.rect)
+
+        center_x, center_y = self.rect.center
+        p.draw.rect(screen, (255, 255, 255), (center_x - 10, center_y - 3, 20, 6))
+        p.draw.rect(screen, (255, 255, 255), (center_x - 3, center_y - 10, 6, 20))

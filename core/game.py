@@ -136,6 +136,10 @@ class Game:
                     if bonus.type == "speed":
                         self.playerA.activate_speed_bonus()
                         self.level.bonuses.remove(bonus)
+                    elif bonus.type == "health":
+                        heal_amount = self.health.max_hp * 0.5
+                        self.health.hp = min(self.health.max_hp, self.health.hp + heal_amount)
+                        self.level.bonuses.remove(bonus)
 
             for enemy in self.level.enemies:
                 if self.playerA.rect.colliderect(enemy.rect) or rect_b.colliderect(enemy.rect):
@@ -172,7 +176,7 @@ class Game:
             score_surf = self.font.render(f"Score: {self.score}", True, YELLOW)
             self.screen.blit(score_surf, (SCREEN_WIDTH - 200, 10))
         else:
-            over_text = self.font.render("GAME OVER - Press R to Restart", True, RED)
+            over_text = self.font.render("GAME OVER - Appuyez sur R pour réessayer !", True, RED)
             center_rect = over_text.get_rect(center=(MID_SCREEN_WIDTH, MID_SCREEN_HEIGHT))
             self.screen.blit(over_text, center_rect)
 
