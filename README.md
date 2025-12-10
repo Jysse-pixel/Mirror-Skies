@@ -27,7 +27,7 @@ Les plateformes translucides sont destructibles, les tourelles vous tirent dessu
 ### Pré-requis :
 - Python 3.X
 - Pygame
-### Votre menu n'est pas aussi beau que le notre ?
+### Votre menu n'est pas aussi beau que le nôtre ?
 Pas de panique : télécharger les fonts présentes dans le dossier "assets" !
 
 Pour lancer le jeu, exécutez le fichier main.py avec Python.
