@@ -93,7 +93,7 @@ class Level:
         wall_y_bot = MID_SCREEN_HEIGHT + (MID_SCREEN_HEIGHT // 2) - 50
         self.platforms.append(Destructible(current_x, wall_y_bot, 50, 100))
         
-        self.enemies.append(Enemy(current_x - 300, wall_y_top, 40, 40, 2, 2, (200, 0, 0), mode="mobile"))
+        self.enemies.append(Enemy(current_x - 300, wall_y_top, 40, 40, 3, 2, (200, 0, 0), mode="mobile"))
 
 
         current_x += 600
@@ -140,8 +140,8 @@ class Level:
         
         current_x += 400
         
-        self.enemies.append(Enemy(current_x, MID_SCREEN_HEIGHT // 2, 40, 40, 1, 4, (200, 50, 50), mode="mobile"))
-        self.enemies.append(Enemy(current_x, MID_SCREEN_HEIGHT + (MID_SCREEN_HEIGHT // 2), 40, 40, 1, 4, (200, 50, 50), mode="mobile"))
+        self.enemies.append(Enemy(current_x, MID_SCREEN_HEIGHT // 2, 40, 40, 2, 4, (200, 50, 50), mode="mobile"))
+        self.enemies.append(Enemy(current_x, MID_SCREEN_HEIGHT + (MID_SCREEN_HEIGHT // 2), 40, 40, 2, 4, (200, 50, 50), mode="mobile"))
         
         current_x += 300
 
@@ -203,6 +203,13 @@ class Level:
         
         self.platforms.append(Moving(current_x, 100, 100, 30, color=(0, 0, 200), min_y=50, max_y=MID_SCREEN_HEIGHT-50, speed=5.0))
         self.platforms.append(Solid(current_x, MID_SCREEN_HEIGHT + 150, 50, 150, (50,50,50)))
+
+        current_x += 1500
+
+        self.enemies.append(Enemy(current_x,MID_SCREEN_HEIGHT-100,200,200,10,0,(255,0,0),"turret"))
+
+
+
 
     
     def update(self):
