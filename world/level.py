@@ -101,8 +101,8 @@ class Level:
         # Tunnel
         
         center_a = MID_SCREEN_HEIGHT // 2
-        ceil_h_a = center_a - (60 // 2)
-        floor_y_a = center_a + (60 // 2)
+        ceil_h_a = center_a - (90 // 2)
+        floor_y_a = center_a + (90 // 2)
         floor_h_a = MID_SCREEN_HEIGHT - floor_y_a
         
         self.platforms.append(Solid(current_x, 0, 1000, ceil_h_a, (50, 50, 50))) 
@@ -110,8 +110,8 @@ class Level:
         self.platforms.append(Solid(current_x, floor_y_a, 1000, floor_h_a, (50, 50, 50)))
 
         center_b = MID_SCREEN_HEIGHT + (MID_SCREEN_HEIGHT // 2)
-        ceil_h_b = (center_b - MID_SCREEN_HEIGHT) - (60 // 2)
-        floor_y_b = center_b + (60 // 2)
+        ceil_h_b = (center_b - MID_SCREEN_HEIGHT) - (90 // 2)
+        floor_y_b = center_b + (90 // 2)
         floor_h_b = SCREEN_HEIGHT - floor_y_b
         
         self.platforms.append(Solid(current_x, MID_SCREEN_HEIGHT, 1000, ceil_h_b, (50, 50, 50))) 

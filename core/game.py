@@ -21,6 +21,9 @@ class Game:
         
        
         self.playerA = Player(200, MID_SCREEN_HEIGHT // 2)
+
+        self.playerB_image = p.image.load("assets/images/joueur2.png").convert_alpha()
+        self.playerB_image = p.transform.scale(self.playerB_image, (80, 60))
         
         self.health = HealthBar(10, 10, 300, 30, 100)
         self.bullets = []
@@ -162,7 +165,7 @@ class Game:
         if self.game_active:
             self.playerA.draw(self.screen)
             rect_b = self.playerA.get_mirror_rect(SCREEN_HEIGHT)
-            p.draw.rect(self.screen, (100, 100, 255), rect_b)
+            self.screen.blit(self.playerB_image, rect_b)
             
             self.level.draw(self.screen)
             

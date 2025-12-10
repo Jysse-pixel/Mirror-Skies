@@ -11,6 +11,9 @@ class Player:
         self.speed = SPEED
         self.bonus_timer = 0
 
+        self.image = p.image.load("assets/images/joueur1.png").convert_alpha()
+        self.image = p.transform.scale(self.image, (80, 60))
+
     def handle_input(self):
         keys = p.key.get_pressed()
         
@@ -59,4 +62,4 @@ class Player:
         self.color = (0, 100, 255) 
 
     def draw(self, screen):
-        p.draw.rect(screen, self.color, self.rect)
+        screen.blit(self.image, self.rect)
