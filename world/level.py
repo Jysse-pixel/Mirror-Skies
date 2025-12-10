@@ -232,3 +232,6 @@ class Level:
             bonus.draw(screen)
         for enemy in self.enemies:
             enemy.draw(screen)
+
+    def is_finished(self):
+        return not (self.platforms or self.coins or self.bonuses or self.enemies)

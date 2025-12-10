@@ -31,9 +31,11 @@ class Game:
         
         self.score = 0
         self.game_active = True
+        self.victory = False
 
     def reset(self):
         self.game_active = True
+        self.victory = False
         self.playerA = Player(200, MID_SCREEN_HEIGHT // 2)
         self.bullets.clear()
         self.enemy_bullets.clear()
@@ -76,6 +78,10 @@ class Game:
             rect_b = self.playerA.get_mirror_rect(SCREEN_HEIGHT)
             
             self.level.update()
+
+            if self.level.is_finished():
+                self.game_active = False
+                self.victory = True
 
             for plat in list(self.level.platforms):
                 if self.playerA.rect.colliderect(plat) or rect_b.colliderect(plat):
@@ -157,6 +163,15 @@ class Game:
             if not alive_a or not alive_b or self.health.hp <= 0:
                 self.game_active = False
 
+    def draw_text_with_outline(self, text, x, y, color):
+        base = self.font.render(text, True, color)
+        outline = self.font.render(text, True, BLACK)
+        
+        for dx, dy in [(-2, 0), (2, 0), (0, -2), (0, 2)]:
+            self.screen.blit(outline, outline.get_rect(center=(x + dx, y + dy)))
+
+        self.screen.blit(base, base.get_rect(center=(x, y)))
+
     def draw(self):
         self.bg.draw(self.screen)
         
@@ -176,12 +191,15 @@ class Game:
                 
             self.health.draw(self.screen)
             
-            score_surf = self.font.render(f"Score: {self.score}", True, YELLOW)
+            score_surf = self.font.render(f"Score : {self.score}", True, YELLOW)
             self.screen.blit(score_surf, (SCREEN_WIDTH - 200, 10))
         else:
-            over_text = self.font.render("GAME OVER - Appuyez sur R pour réessayer !", True, RED)
-            center_rect = over_text.get_rect(center=(MID_SCREEN_WIDTH, MID_SCREEN_HEIGHT))
-            self.screen.blit(over_text, center_rect)
+            if self.victory:
+                self.draw_text_with_outline("NIVEAU TERMINE - Score : " + str(self.score), MID_SCREEN_WIDTH, MID_SCREEN_HEIGHT - 200, GREEN)
+            else:
+                over_text = self.font.render("GAME OVER - Appuyez sur R pour réessayer !", True, RED)
+                center_rect = over_text.get_rect(center=(MID_SCREEN_WIDTH, MID_SCREEN_HEIGHT))
+                self.screen.blit(over_text, center_rect)
 
         p.display.flip()
 
