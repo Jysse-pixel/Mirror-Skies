@@ -8,8 +8,7 @@ Mais prenez garde à ne pas gaspiller vos munitions ! Qui sait, vous pourriez fi
 ### Rammassez des pièces et battez votre record !
 Certaines zones bonus peuvent vous rapporter plus de pièces, serez-vous prêt à prendre des risques ?
 
-<img width="1462" height="954" alt="image" src="https://github.com/user-attachments/assets/244b18d3-f081-4f7d-9ef5-d9e6cc5c7b8c" />
-
+![Petite démo](assets/images/demo1.png)
 
 ### Évitez les obstacles !
 A vous de faire en sorte que vos deux vaisseaux s'en sortent indemnes ! La moindre erreur peut vous coûter cher, prenez garde aux bords.
@@ -36,6 +35,11 @@ Pas de panique : télécharger les fonts présentes dans le dossier "assets" !
 Pour lancer le jeu, exécutez le fichier main.py avec Python.
 
 ## Crédits
+Assets :
+- Free City Enemies Pixel Art by [craftPix.net](https://free-game-assets.itch.io/free-city-enemies-pixel-art-sprite-sheets)
+- Brackeys' Platformer Bundle by [Brackeys, analogStudios et RottingPixels](https://brackeysgames.itch.io/brackeys-platformer-bundle)
+- Pixel Items by [Fågeltomten](https://fageltomten.itch.io/pixel-items)
+ 
 Etudiants :
 - BOUDJAJ Hania
 - ANTOINE Alexis
