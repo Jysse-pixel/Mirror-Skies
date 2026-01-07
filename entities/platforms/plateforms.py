@@ -1,29 +1,34 @@
 import pygame as p
 
 class Platform(p.Rect):
-    def __init__(self, x, y, w=200, h=50, color=(100, 100, 100)):
+    def __init__(self, x, y, w=200, h=50, color=(100, 100, 100), image="assets/images/plat.png"):
         super().__init__(x, y, w, h)
         self.x_float = float(x)
         self.color = color
         self.destructible = False
+
+        original_image = p.image.load(image).convert_alpha()
+        self.image = p.transform.scale(original_image, (w, h))
 
     def update(self, scroll_speed):
         self.x_float += scroll_speed
         self.x = int(self.x_float)
 
     def draw(self, screen):
-        p.draw.rect(screen, self.color, self)
+        screen.blit(self.image, self)
 
 class Solid(Platform):
     pass
 
 class Destructible(Platform):
-    def __init__(self, x, y, w=200, h=50, color=(0, 200, 0)):
-        super().__init__(x, y, w, h, color)
+    def __init__(self, x, y, w=200, h=50, color=(0, 200, 0), image="assets/images/destructible.png"):
+        super().__init__(x, y, w, h, color, image)
         self.destructible = True
         self.health = 3   
         self.max_health = 3
 
+        original_image = p.image.load(image).convert_alpha()
+        self.image = p.transform.scale(original_image, (w, h))
     def take_damage(self):
         self.health -= 1
         return self.health <= 0
@@ -33,7 +38,8 @@ class Destructible(Platform):
         r = int(self.color[0] * ratio)
         g = int(self.color[1] * ratio)
         b = int(self.color[2] * ratio)
-        p.draw.rect(screen, (255, 255, 255), self, 2)
+
+        screen.blit(self.image, self)
 
 class Moving(Platform):
     def __init__(self, x, y, w=150, h=30, color=(255, 0, 0), min_y=None, max_y=None, speed=2.0):

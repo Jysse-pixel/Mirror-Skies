@@ -54,7 +54,7 @@ def start_menu():
     # List des boutons
 
     buttons =  [
-        Button("Jouer", 320, "play"),
+        Button("Choix du niveau", 320, "level_choice"),
         Button("Quitter", 400, "quit")
     ]
 
@@ -77,8 +77,10 @@ def start_menu():
             btn.draw(screen, mouse_pos)
             if btn.is_clicked(mouse_pos, mouse_pressed):
                 p.time.delay(200)
-                if btn.action == "play":
-                    return "play"
+                #if btn.action == "play":
+                #    return "play"
+                if btn.action == "level_choice":
+                    return "level_choice"
                 elif btn.action == "quit":
                     return "quit"
         
@@ -89,7 +91,6 @@ def start_menu():
 
 def pause_menu(screen):
     """Menu de pause une fois en jeu"""
-    #screen = p.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), p.FULLSCREEN | p.SCALED)
     clock = p.time.Clock()
 
     ## Ressources
@@ -131,4 +132,57 @@ def pause_menu(screen):
             if event.type == p.KEYDOWN:
                 if event.key == p.K_p:
                     return "continue"
+        p.display.flip()
+
+def level_choice():
+    """Menu de choix des niveaux"""
+    screen = p.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), p.FULLSCREEN | p.SCALED)
+    clock = p.time.Clock()
+
+    ## Ressources
+    background = p.image.load("assets/images/menuBg.jpg")
+    background=p.transform.scale(background, (SCREEN_WIDTH, SCREEN_HEIGHT))
+        
+    # Liste des boutons
+
+    buttons =  [
+        Button("Niveau 1", 320, "lvl_1"), # Laisser underscore, important pour récup num level
+        Button("Niveau 2", 400, "lvl_2"),
+        Button("Retour", 480, "back")
+    ]
+
+    p.event.clear # Evite les actions parasites
+
+    running = True
+    while running:
+        clock.tick(60)
+        screen.blit(background, (0,0))
+
+        mouse_pos = p.mouse.get_pos()
+        mouse_pressed = p.mouse.get_pressed()
+
+        title = FONT_TITLE.render("Choix du niveau", True, WHITE)
+        shadow = FONT_TITLE.render("Choix du niveau", True, SHADOW)
+        screen.blit(shadow, (SCREEN_WIDTH//2 - title.get_width()//2 + 3, int(title.get_height()) + 3))
+        screen.blit(title, (SCREEN_WIDTH//2 - title.get_width()//2, int(title.get_height())))
+        
+
+        for btn in buttons:
+            btn.draw(screen, mouse_pos)
+            if btn.is_clicked(mouse_pos, mouse_pressed):
+                p.time.delay(200)
+                if btn.action == "back":
+                    action = start_menu()
+                    return "back"
+                elif btn.action.startswith("lvl"):
+                    lvl_num = int(btn.action.split("_")[1]) #récup lvl num
+                    return lvl_num
+
+
+        for event in p.event.get():
+            if event.type == p.QUIT:
+                return "quit"
+            if event.type == p.KEYDOWN:
+                if event.key == p.K_ESCAPE:
+                    return "back"
         p.display.flip()

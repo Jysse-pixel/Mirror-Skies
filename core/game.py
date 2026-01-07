@@ -10,16 +10,16 @@ from core.input import fired
 from ui.menu import start_menu, pause_menu
 
 class Game:
-    def __init__(self):
+    def __init__(self, lvl_num=1):
         self.screen = p.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), p.FULLSCREEN | p.SCALED)
         p.display.set_caption("Mirror Skies")
         self.clock = p.time.Clock()
         self.font = p.font.SysFont(None, 48)
 
         self.bg = Background("assets/images/bg.png")
-        self.level = Level()
-        
-       
+        self.lvl_num = lvl_num
+        self.level = Level(lvl_num)
+
         self.playerA = Player(200, MID_SCREEN_HEIGHT // 2)
 
         self.playerB_image = p.image.load("assets/images/joueur2.png").convert_alpha()
@@ -41,7 +41,7 @@ class Game:
         self.enemy_bullets.clear()
         self.score = 0
         self.health.hp = self.health.max_hp
-        self.level = Level() 
+        self.level = Level(self.lvl_num) 
 
     def handle_events(self):
         for e in p.event.get():

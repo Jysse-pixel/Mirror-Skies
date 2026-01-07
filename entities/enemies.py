@@ -3,7 +3,7 @@ import math
 from settings import MID_SCREEN_HEIGHT
 
 class Enemy: 
-    def __init__(self, x, y, w, h, hp, vy, color, mode="mobile"):
+    def __init__(self, x, y, w, h, hp, vy, color, mode="mobile", image = "assets/images/ennemy.png",):
         self.rect = p.Rect(x, y, w, h)
         self.x_float = float(x)
         self.y_float = float(y)
@@ -11,8 +11,9 @@ class Enemy:
         self.color = color # couleur affichée
         self.base_color = color # couleur normale
         self.mode = mode #"mobile" ou "turret"
-        # A changer car problème / A.A
-        
+        self.image = p.image.load(image).convert_alpha()
+        self.image = p.transform.scale(self.image, (w, h))
+
         self.velocity_y = vy
         # limites du mouvement vertical
         self.min_y = y - 80
@@ -66,4 +67,5 @@ class Enemy:
         return None
 
     def draw(self, screen):
-        p.draw.rect(screen, self.color, self.rect)
+        #p.draw.rect(screen, self.color, self.rect)
+        screen.blit(self.image, self)

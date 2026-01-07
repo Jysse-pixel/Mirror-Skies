@@ -20,7 +20,7 @@ class Level:
         if level_number == 1:
             self._generate_level_1()
         elif level_number == 2:
-            pass
+            self._generate_level_2()
         else:
             self._generate_level_1()
 
@@ -208,12 +208,117 @@ class Level:
 
         self.enemies.append(Enemy(current_x,MID_SCREEN_HEIGHT-100,200,200,10,0,(255,0,0),"turret"))
 
+    def _generate_level_2(self):
+        current_x = SCREEN_WIDTH + 50
 
+        # pièces début
+        self.coins.append(Coin(current_x, MID_SCREEN_HEIGHT + 200))
+        self.coins.append(Coin(current_x + 100, MID_SCREEN_HEIGHT - 180))
+        self.coins.append(Coin(current_x + 200, MID_SCREEN_HEIGHT + 150))
+        self.coins.append(Coin(current_x + 300, MID_SCREEN_HEIGHT + 50))
+        self.coins.append(Coin(current_x + 400, MID_SCREEN_HEIGHT - 220))
 
+        current_x += 600
 
-    
-    def update(self):
+        # plat haut
+        self.platforms.append(Solid(current_x, 50, 200, 250, (100, 100, 150)))
+        self.coins.append(Coin(current_x + 100, 400))
+        self.coins.append(Coin(current_x + 100, MID_SCREEN_HEIGHT + 200))
         
+        self.enemies.append(Enemy(current_x - 100, MID_SCREEN_HEIGHT // 2 - 100, 40, 40, 3, 2, (200, 100, 100), mode="mobile"))
+
+        current_x += 500
+
+        # mur bas
+        self.platforms.append(Solid(current_x, SCREEN_HEIGHT - 250, 150, 250, (150, 100, 100)))
+        self.coins.append(Coin(current_x + 75, SCREEN_HEIGHT - 300))
+        self.coins.append(Coin(current_x + 75, MID_SCREEN_HEIGHT // 2))
+
+        current_x += 500
+
+        # destructibles asymétriques
+        self.platforms.append(Destructible(current_x, MID_SCREEN_HEIGHT // 2 - 80, 50, 100))
+        self.platforms.append(Destructible(current_x + 300, SCREEN_HEIGHT - 200, 50, 100))
+        self.platforms.append(Destructible(current_x + 500, 100, 50, 100))
+        
+        self.coins.append(Coin(current_x + 150, MID_SCREEN_HEIGHT))
+        self.coins.append(Coin(current_x + 400, SCREEN_HEIGHT - 150))
+        self.coins.append(Coin(current_x + 550, 200))
+
+        self.enemies.append(Enemy(current_x + 200, SCREEN_HEIGHT - 150, 40, 40, 2, 0, (200, 0, 0), mode="turret"))
+
+        current_x += 700
+
+        # plat mobile haut
+        self.platforms.append(Moving(current_x, MID_SCREEN_HEIGHT // 2 - 100, 150, 30, color=(0, 150, 200), min_y=50, max_y=MID_SCREEN_HEIGHT-50, speed=4.0))
+        self.coins.append(Coin(current_x + 200, MID_SCREEN_HEIGHT // 2 - 150))
+        self.coins.append(Coin(current_x + 200, MID_SCREEN_HEIGHT + 250))
+
+        current_x += 500
+
+        # plat mobile bas
+        self.platforms.append(Moving(current_x, MID_SCREEN_HEIGHT + MID_SCREEN_HEIGHT // 2 + 100, 150, 30, color=(200, 150, 0), min_y=MID_SCREEN_HEIGHT+100, max_y=SCREEN_HEIGHT-80, speed=5.0))
+        self.coins.append(Coin(current_x + 200, MID_SCREEN_HEIGHT - 300))
+        self.coins.append(Coin(current_x + 200, MID_SCREEN_HEIGHT + MID_SCREEN_HEIGHT // 2 + 150))
+
+        self.enemies.append(Enemy(current_x + 300, MID_SCREEN_HEIGHT // 2 + 150, 40, 40, 3, 3, (220, 100, 100), mode="mobile"))
+
+        current_x += 650
+
+        # ennemis
+        self.enemies.append(Enemy(current_x, 100, 40, 40, 2, 0, (200, 0, 0), mode="turret"))
+        self.enemies.append(Enemy(current_x + 300, SCREEN_HEIGHT - 150, 40, 40, 3, 0, (200, 0, 0), mode="turret"))
+        
+        self.coins.append(Coin(current_x + 150, MID_SCREEN_HEIGHT))
+
+        current_x += 600
+
+        # plat bas
+        self.platforms.append(Solid(current_x, SCREEN_HEIGHT - 200, 250, 200, (100, 150, 100)))
+        self.bonuses.append(HealthBonus(current_x + 400, MID_SCREEN_HEIGHT // 2))
+        
+        self.coins.append(Coin(current_x + 125, SCREEN_HEIGHT - 250))
+        self.coins.append(Coin(current_x + 125, MID_SCREEN_HEIGHT - 200))
+
+        current_x += 700
+
+        # plateformes
+        self.platforms.append(Solid(current_x, 80, 120, 150, (120, 120, 180)))
+        self.platforms.append(Solid(current_x + 250, MID_SCREEN_HEIGHT - 100, 120, 150, (120, 120, 180)))
+        self.platforms.append(Solid(current_x + 500, SCREEN_HEIGHT - 200, 120, 150, (120, 120, 180)))
+        
+        self.coins.append(Coin(current_x + 60, 150))
+        self.coins.append(Coin(current_x + 310, MID_SCREEN_HEIGHT - 150))
+        self.coins.append(Coin(current_x + 560, SCREEN_HEIGHT - 250))
+
+        self.enemies.append(Enemy(current_x + 200, MID_SCREEN_HEIGHT // 2, 40, 40, 3, 2, (200, 100, 100), mode="mobile"))
+
+        current_x += 750
+
+        # destructibles haut
+        for i in range(3):
+            self.platforms.append(Destructible(current_x + i * 200, 100 + i * 50, 50, 80))
+            self.coins.append(Coin(current_x + i * 200 + 120, 80))
+        
+        self.coins.append(Coin(current_x + 200, MID_SCREEN_HEIGHT + 200))
+
+        current_x += 700
+
+        # plat rapides haut
+        self.platforms.append(Moving(current_x, MID_SCREEN_HEIGHT // 2 - 150, 130, 30, color=(255, 100, 0), min_y=60, max_y=MID_SCREEN_HEIGHT-100, speed=6.0))
+        self.bonuses.append(SpeedBonus(current_x + 300, MID_SCREEN_HEIGHT + 200))
+
+        current_x += 600
+
+        # Boss
+        self.enemies.append(Enemy(current_x, 80, 200, 200, 10, 0, (255, 0, 0), "turret"))
+        self.enemies.append(Enemy(current_x + 400, SCREEN_HEIGHT - 150, 40, 40, 4, 0, (200, 0, 0), "turret"))
+        
+        self.coins.append(Coin(current_x + 100, MID_SCREEN_HEIGHT))
+        self.coins.append(Coin(current_x + 300, SCREEN_HEIGHT - 200))
+
+    def update(self):
+
         for plat in list(self.platforms):
             plat.update(SCROLL_BG_SPEED)
             if plat.right < 0: self.platforms.remove(plat)
